@@ -2,6 +2,9 @@
 
 A Figma plugin for generating flex-box-like wrapped layouts
 
+![cover_image](https://user-images.githubusercontent.com/3891632/141874646-2a49faf9-e696-4642-a593-195c1595f9a9.gif)
+
+
 ## Usage
 
 1. Select any number of nodes, or a frame node with children
