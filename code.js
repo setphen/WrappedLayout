@@ -64,6 +64,13 @@ function applyLayout(frame, rowGap, colGap) {
     let x = 0;
     let y = 0;
     while (children.length > 0) {
+        //place first child
+        let child = children.shift();
+        placedChildren.push(child);
+        child.x = x;
+        child.y = y;
+        x = x + child.width + colGap;
+        //continue placing children
         while (children.length > 0 && x + children[0].width <= maxWidth) {
             let child = children.shift();
             placedChildren.push(child);
