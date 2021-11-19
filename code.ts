@@ -51,7 +51,7 @@ figma.ui.onmessage = msg => {
       frame.y = selection.reduce((prev, curr) => prev.y < curr.y ? prev : curr).y
 
       let baseWidth = getTotalWidth(selection)
-      frame.resize(baseWidth, frame.height)
+      frame.resizeWithoutConstraints(baseWidth, frame.height)
 
       selection.forEach(n => frame.appendChild(n))
 
@@ -117,7 +117,7 @@ function applyLayout(frame, rowGap, colGap) {
     y = getTotalHeight(placedChildren) + rowGap
   }
 
-  frame.resize(frame.width, getTotalHeight(placedChildren))
+  frame.resizeWithoutConstraints(frame.width, getTotalHeight(placedChildren))
 
   figma.currentPage.selection = [frame]
 }

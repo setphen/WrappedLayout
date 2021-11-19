@@ -40,7 +40,7 @@ figma.ui.onmessage = msg => {
             frame.x = selection.reduce((prev, curr) => prev.x < curr.x ? prev : curr).x;
             frame.y = selection.reduce((prev, curr) => prev.y < curr.y ? prev : curr).y;
             let baseWidth = getTotalWidth(selection);
-            frame.resize(baseWidth, frame.height);
+            frame.resizeWithoutConstraints(baseWidth, frame.height);
             selection.forEach(n => frame.appendChild(n));
             applyLayout(frame, rowGap, colGap);
         }
@@ -83,7 +83,7 @@ function applyLayout(frame, rowGap, colGap) {
         // new y is total height of all placed children, plus a gap
         y = getTotalHeight(placedChildren) + rowGap;
     }
-    frame.resize(frame.width, getTotalHeight(placedChildren));
+    frame.resizeWithoutConstraints(frame.width, getTotalHeight(placedChildren));
     figma.currentPage.selection = [frame];
 }
 // Utils
