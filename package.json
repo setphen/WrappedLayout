@@ -4,12 +4,21 @@
   "description": "Your Figma plugin",
   "main": "code.js",
   "scripts": {
-    "build": "tsc -p tsconfig.json",
-    "watch": "tsc -w -p tsconfig.json"
+    "build": "npx webpack --mode=production",
+    "watch": "npx webpack --mode=development --watch"
   },
   "author": "",
   "license": "",
   "devDependencies": {
-    "@figma/plugin-typings": "^1.39.0"
+    "@figma/plugin-typings": "^1.39.0",
+    "css-loader": "^6.5.1",
+    "html-webpack-inline-source-plugin": "^1.0.0-beta.2",
+    "html-webpack-plugin": "^5.5.0",
+    "style-loader": "^3.3.1",
+    "ts-loader": "^9.2.6",
+    "typescript": "^4.5.2",
+    "url-loader": "^4.1.1",
+    "webpack": "^5.64.2",
+    "webpack-cli": "^4.9.1"
   }
 }

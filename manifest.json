@@ -2,9 +2,9 @@
   "name": "WrappedLayout",
   "id": "1042129478204950669",
   "api": "1.0.0",
-  "main": "code.js",
+  "main": "dist/code.js",
+  "ui": "dist/ui.html",
   "editorType": [
     "figma"
-  ],
-  "ui": "ui.html"
+  ]
 }
