@@ -20,5 +20,8 @@
     "url-loader": "^4.1.1",
     "webpack": "^5.64.2",
     "webpack-cli": "^4.9.1"
+  },
+  "dependencies": {
+    "@figma-plugin/helpers": "^0.15.2"
   }
 }

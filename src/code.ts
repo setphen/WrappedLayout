@@ -1,19 +1,11 @@
-// This plugin will open a window to prompt the user to enter a number, and
-// it will then create that many rectangles on the screen.
+import { getBoundingRect } from '@figma-plugin/helpers';
 
-// This file holds the main code for the plugins. It has access to the *document*.
-// You can access browser APIs in the <script> tag inside "ui.html" which has a
-// full browser environment (see documentation).
-
-// This shows the HTML page in "ui.html".
 figma.showUI(__html__, { width: 240, height: 260 });
 
 // Calls to "parent.postMessage" from within the HTML page will trigger this
 // callback. The callback will be passed the "pluginMessage" property of the
 // posted message.
 figma.ui.onmessage = msg => {
-  // One way of distinguishing between different types of messages sent from
-  // your HTML page is to use an object with a "type" property like this.
   if (msg.type === 'apply-layout') {
 
     // Store row and column gap values
@@ -50,7 +42,7 @@ figma.ui.onmessage = msg => {
       frame.x = selection.reduce((prev, curr) => prev.x < curr.x ? prev : curr).x
       frame.y = selection.reduce((prev, curr) => prev.y < curr.y ? prev : curr).y
 
-      let baseWidth = getTotalWidth(selection)
+      let baseWidth = getBoundingRect(selection).width
       frame.resizeWithoutConstraints(baseWidth, frame.height)
 
       selection.forEach(n => frame.appendChild(n))
@@ -93,10 +85,12 @@ function applyLayout(frame, rowGap, colGap) {
 
     placedChildren.push(child)
 
-    child.x = x
-    child.y = y
+    let rect = getBoundingRect([child])
 
-    x = x + child.width + colGap
+    child.x = x + (child.absoluteTransform[0][2] - rect.x)
+    child.y = y + (child.absoluteTransform[1][2] - rect.y)
+
+    x = x + rect.width + colGap
 
     //continue placing children
     while(children.length > 0 &&  x + children[0].width <= maxWidth) {
@@ -104,20 +98,22 @@ function applyLayout(frame, rowGap, colGap) {
 
       placedChildren.push(child)
 
-      child.x = x
-      child.y = y
+      let rect = getBoundingRect([child])
 
-      x = x + child.width + colGap
+      child.x = x + (child.absoluteTransform[0][2] - rect.x)
+      child.y = y + (child.absoluteTransform[1][2] - rect.y)
+
+      x = x + rect.width + colGap
     }
 
     // move back to the lefthand side
     x = 0
 
     // new y is total height of all placed children, plus a gap
-    y = getTotalHeight(placedChildren) + rowGap
+    y = getBoundingRect(placedChildren).height + rowGap
   }
 
-  frame.resizeWithoutConstraints(frame.width, getTotalHeight(placedChildren))
+  frame.resizeWithoutConstraints(frame.width, getBoundingRect(placedChildren).height)
 
   figma.currentPage.selection = [frame]
 }
@@ -140,26 +136,4 @@ function sortXY(ob1,ob2) {
     } else { // nothing to split them
         return 0;
     }
-}
-
-// returns total width of the group of nodes
-function getTotalWidth(nodes = []) {
-  let left = nodes.reduce((prev, curr) => prev.x < curr.x ? prev : curr)
-  let right = nodes.reduce((prev, curr) => prev.x + prev.width > curr.x + curr.width ? prev : curr)
-
-  let min = left.x
-  let max = right.x + right.width
-
-  return max - min
-}
-
-// returns total height of the group of nodes
-function getTotalHeight(nodes = []) {
-  let top = nodes.reduce((prev, curr) => prev.y < curr.y ? prev : curr)
-  let bottom = nodes.reduce((prev, curr) => prev.y + prev.height > curr.y + curr.height ? prev : curr)
-
-  let min = top.y
-  let max = bottom.y + bottom.height
-
-  return max - min
 }
