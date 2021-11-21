@@ -10,10 +10,16 @@
   "author": "",
   "license": "",
   "devDependencies": {
+    "@babel/core": "^7.12.16",
+    "@babel/preset-env": "^7.12.16",
+    "@babel/preset-typescript": "^7.12.16",
     "@figma/plugin-typings": "^1.39.0",
+    "babel-loader": "^8.2.2",
+    "babel-preset-preact": "^2.0.0",
     "css-loader": "^6.5.1",
     "html-webpack-inline-source-plugin": "^1.0.0-beta.2",
     "html-webpack-plugin": "^5.5.0",
+    "react-dev-utils": "^11.0.4",
     "style-loader": "^3.3.1",
     "ts-loader": "^9.2.6",
     "typescript": "^4.5.2",
@@ -22,6 +28,7 @@
     "webpack-cli": "^4.9.1"
   },
   "dependencies": {
-    "@figma-plugin/helpers": "^0.15.2"
+    "@figma-plugin/helpers": "^0.15.2",
+    "preact": "^10.5.15"
   }
 }

@@ -8,6 +8,8 @@ figma.showUI(__html__, { width: 240, height: 260 });
 figma.ui.onmessage = msg => {
   if (msg.type === 'apply-layout') {
 
+    console.log("HELLO")
+
     // Store row and column gap values
     let rowGap = parseInt(msg.rowGap)
     let colGap = parseInt(msg.colGap)
@@ -78,8 +80,7 @@ function applyLayout(frame, rowGap, colGap) {
   let x = 0
   let y = 0
 
-  while(children.length > 0) {
-
+  let placeChild = (children) => {
     //place first child
     let child = children.shift()
 
@@ -91,19 +92,16 @@ function applyLayout(frame, rowGap, colGap) {
     child.y = y + (child.absoluteTransform[1][2] - rect.y)
 
     x = x + rect.width + colGap
+  }
+
+  while(children.length > 0) {
+
+    //place first child
+    placeChild(children)
 
     //continue placing children
     while(children.length > 0 &&  x + children[0].width <= maxWidth) {
-      let child = children.shift()
-
-      placedChildren.push(child)
-
-      let rect = getBoundingRect([child])
-
-      child.x = x + (child.absoluteTransform[0][2] - rect.x)
-      child.y = y + (child.absoluteTransform[1][2] - rect.y)
-
-      x = x + rect.width + colGap
+      placeChild(children)
     }
 
     // move back to the lefthand side
