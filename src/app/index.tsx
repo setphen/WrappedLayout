@@ -1,4 +1,4 @@
-import { render, h } from 'preact';
+import { render, h, Component } from 'preact';
 
 import Logo from './assets/logo.svg';
 import ColSpacing from './assets/col-spacing.svg';
@@ -8,36 +8,62 @@ import './style.scss';
 
 const select = e => e.target.select();
 
-const validate = e => {
-  let t = e.target
-  let v = parseInt(t.value)
-  if (isNaN(v) || v < 0) t.value = "0"; return
+const validate = n => {
+  let v = parseInt(n)
+  if (isNaN(v) || v < 0) return "0";
+  return n;
 }
 
-const app = (
-    <div>
+class App extends Component {
 
-      <p className="section-title">
-        Wrapped Layout
-      </p>
+  state = { rowGap: "10", colGap: "10" }
 
-      <div className="input-row">
-        <div className="input">
-          <img src={ ColSpacing } alt="" />
-          <input type="number" id="colGap" value="10" min="0" onFocus={ select } onChange={ validate }/>
+  handleMessage = e => {
+    let msg = e.data.pluginMessage;
+    this.setState({ colGap: msg.colGap, rowGap: msg.rowGap });
+  }
+
+  componentDidMount() {
+    window.addEventListener('message', this.handleMessage)
+  }
+
+  onColInput = e => {
+    let v = validate(e.target.value)
+    this.setState({ colGap: v });
+  }
+
+  onRowInput = e => {
+    let v = validate(e.target.value)
+    this.setState({ rowGap: v });
+  }
+
+  render() {
+    return (
+      <div>
+
+        <p className="section-title">
+          Wrapped Layout
+        </p>
+
+        <div className="input-row">
+          <div className="input">
+            <img src={ ColSpacing } alt="" />
+            <input type="number" id="colGap" value={ this.state.colGap } min="0" onFocus={ select } onChange={ this.onColInput }/>
+          </div>
+          <div className="input">
+            <img src={ RowSpacing } alt="" />
+            <input type="number" id="rowGap" value={ this.state.rowGap } min="0" onFocus={ select } onChange={ this.onRowInput }/>
+          </div>
         </div>
-        <div className="input">
-          <img src={ RowSpacing } alt="" />
-          <input type="number" id="rowGap" value="10" min="0" onFocus={ select } onChange={ validate }/>
-        </div>
+
+        <button onClick={ e => parent.postMessage({ pluginMessage: { type: 'apply-layout', ...this.state } }, '*') }>
+          Apply Layout
+        </button>
       </div>
-
-      <button onClick={ e => parent.postMessage({ pluginMessage: { type: 'apply-layout', rowGap: 10, colGap: 10 } }, '*') }>
-        Apply Layout
-      </button>
-    </div>
-)
+    );
+  }
+}
 
 window.onload = function() {
-  render(app, document.getElementById("app"));
+  render(<App />, document.getElementById("app"));
 }

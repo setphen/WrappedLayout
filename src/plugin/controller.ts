@@ -2,6 +2,17 @@ import { getBoundingRect } from '@figma-plugin/helpers';
 
 figma.showUI(__html__, { width: 236, height: 150 });
 
+let storedVals = figma.currentPage.getPluginData("store")
+
+if (storedVals === "") {
+  figma.currentPage.setPluginData("store", '10,10')
+} else {
+  // load stored values
+  let colGap, rowGap;
+  [colGap, rowGap] = storedVals.split(",")
+  figma.ui.postMessage({ type: "restore-vals", colGap, rowGap })
+}
+
 // Calls to "parent.postMessage" from within the HTML page will trigger this
 // callback. The callback will be passed the "pluginMessage" property of the
 // posted message.
@@ -11,6 +22,8 @@ figma.ui.onmessage = msg => {
     // Store row and column gap values
     let rowGap = parseInt(msg.rowGap)
     let colGap = parseInt(msg.colGap)
+
+    figma.currentPage.setPluginData("store", `${colGap},${rowGap}`)
 
     let selection = figma.currentPage.selection
 

@@ -11,7 +11,7 @@ body {
   font-size: 12px;
   user-select: none;
   color: #222;
-  margin: 2em 2em 0;
+  margin: 2em 1em 0;
 }
 
 .section-title {
@@ -61,8 +61,9 @@ button {
   input {
     border: 0;
     height: auto;
+    margin-left: 0.35em;
     padding: 0;
-    width: 4em;
+    width: 100%;
 
     &:focus {
       border: 0;
@@ -72,10 +73,11 @@ button {
 }
 
 .input-row {
-  display: flex;
   align-items: center;
+  display: flex;
+  gap: 1em;
   justify-content: space-between;
-  margin: 0.5em 0;
+  margin: 1em 0;
 }
 
 
