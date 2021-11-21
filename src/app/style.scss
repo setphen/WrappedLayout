@@ -1,0 +1,91 @@
+@import 'variables';
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+  user-select: none;
+  color: #222;
+  margin: 2em 2em 0;
+}
+
+.section-title {
+  font-weight: bold;
+}
+
+.logo {
+  width: 100%;
+  height: auto;
+}
+
+button {
+  appearance: none;
+  background-color: white;
+  border-radius: 6px;
+  border: 1px solid currentColor;
+  font-size: inherit;
+  padding: 10px;
+  text-align: center;
+  width: 100%;
+
+  &:focus,
+  &:active {
+    border-color: transparent;
+    box-shadow: 0 0 0 2px $blue;
+    outline: 0;
+  }
+}
+
+.input {
+  align-items: center;
+  border-radius: 2px;
+  border: 1px solid transparent;
+  display: inline-flex;
+  gap: 0.5em;
+  padding: 6px 7px;
+
+  &:hover {
+    border-color: $lightgray;
+  }
+
+  &:focus-within {
+    border-color: transparent;
+    box-shadow: 0 0 0 2px $blue;
+  }
+
+  input {
+    border: 0;
+    height: auto;
+    padding: 0;
+    width: 4em;
+
+    &:focus {
+      border: 0;
+      outline: 0;
+    }
+  }
+}
+
+.input-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0.5em 0;
+}
+
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+input[type=number] {
+    -moz-appearance:textfield; /* Firefox */
+}

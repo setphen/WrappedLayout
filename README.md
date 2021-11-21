@@ -1,4 +1,4 @@
-# WrappedLayout
+# Wrapped Layout
 
 A Figma plugin for generating flex-box-like wrapped layouts
 
