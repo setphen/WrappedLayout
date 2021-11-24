@@ -4,6 +4,11 @@
     "jsxFactory": "h",
     "jsxFragmentFactory": "Fragment",
     "jsxImportSource": "preact",
+      // Ensure that .d.ts files are created by tsc, but not .js files
+    "declaration": true,
+    "emitDeclarationOnly": true,
+      // Ensure that Babel can safely transpile files in the TypeScript project
+    "isolatedModules": true,
     "target": "es2020",
     "moduleResolution": "node",
     "typeRoots": [

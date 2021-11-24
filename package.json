@@ -5,7 +5,8 @@
   "main": "code.js",
   "scripts": {
     "build": "npx webpack --mode=production",
-    "watch": "npx webpack --mode=development --watch"
+    "watch": "npx webpack --mode=development --watch",
+    "check-types": "tsc"
   },
   "author": "",
   "license": "",

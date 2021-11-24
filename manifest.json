@@ -6,5 +6,12 @@
   "ui": "dist/ui.html",
   "editorType": [
     "figma"
+  ],
+  "parameters": [
+    {
+      "name": "spacing",
+      "key": "spacing",
+      "description": "Enter the gap in pixels"
+    }
   ]
 }
